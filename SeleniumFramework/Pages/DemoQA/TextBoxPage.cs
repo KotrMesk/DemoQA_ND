@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SeleniumFramework.Pages.DemoQA
+﻿namespace SeleniumFramework.Pages.DemoQA
 {
     public class TextBoxPage
     {
         private static string boxToChangeColorLocator = "//*[@class='mr-sm-2 field-error form-control']";
-        private static string outputBoxLocator = "//*[@class='border col-md-12 col-sm-12']";
-
-
-
+        private static string outputBoxLocator = "//*[@id='output']";
 
         public static void ClickSubmitButton()
         {
             string locator = "//*[@class='btn btn-primary']";
-            Common.ClickElement(locator);
+            Common.ScrollUntilElementIsClickableAndClickElement(locator);
+        }
+        
+        public static void WaitForEmailBoxBorderColorToBe(string expectedColor)
+        {
+            Common.WaitForElementCssPropertyToBe(boxToChangeColorLocator, "border-color", expectedColor);
         }
 
         public static string GetEmailBoxBorderColor()
         {
-            return Common.GetElementCssAttributeValue(boxToChangeColorLocator, "border");
+            return Common.GetElementCssAttributeValue(boxToChangeColorLocator, "border-color");
         }
 
         public static string GetTextOutput()
         {
-            return Common.GetElementCssAttributeValue(outputBoxLocator, "body");
+            return Common.GetElementText(outputBoxLocator);
         }
 
         public static void InputCurrentAddress(string currentAddress)
@@ -58,11 +54,6 @@ namespace SeleniumFramework.Pages.DemoQA
         {
             string locator = "(//*[@id='permanentAddress'])[1]";
             Common.SendKeys(locator, permanentAddress);
-        }
-
-        public static void Open()
-        {
-            Driver.OpenUrl("https://demoqa.com/text-box");
         }
     }
 }
